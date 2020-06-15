@@ -1,0 +1,9 @@
+{
+	"compilerOptions": {
+		"source-path": [
+			"src"
+		],
+		"output": "bin/Main.swf"
+	},
+	"mainClass": "Main"
+}

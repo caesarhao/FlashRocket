@@ -8,6 +8,7 @@ package
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
+	import component.propellant.PropellantType;
 	public class Main extends Sprite
 	{
 		private var nclick:uint = 0;
@@ -26,9 +27,9 @@ package
 			eng.x = stage.stageWidth/2 - eng.pivotX;
 			eng.y = stage.stageHeight/2 - eng.pivotY;
 			addChild(eng);
-			tank = new Tank();
-			tank.x = 100;
-			tank.y = 100;
+			tank = new Tank(PropellantType.RP1, 10, 3, 0.3);
+			tank.x = 200;
+			tank.y = 200;
 			addChild(tank);
 			this.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDownStage);
 			this.stage.addEventListener(MouseEvent.CLICK, onMouseClickStage);

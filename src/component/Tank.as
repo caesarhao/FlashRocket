@@ -1,8 +1,11 @@
+// https://checalc.com/calc/vessel.html
+// Elliptical Head is used.
 package component
 {
     import flash.display.Shape;
     import flash.display.Graphics;
-    import component.propellant.Propellant;
+    import propellant.Propellant;
+    import coordinator.Coordinator;
 
     public class Tank extends RocketComponent{
         private var _propellantType:int;
@@ -21,7 +24,7 @@ package component
         }
         public function get heightInPixel():Number
         {
-        	return Math.round(_heightInMeter*PixelperMeter);
+        	return Math.round(_heightInMeter*Coordinator.PixelperMeter);
         }
         private var _diameterInMeter:Number;
 
@@ -31,7 +34,16 @@ package component
         }
         public function get diameterInPixel():Number
         {
-        	return Math.round(_diameterInMeter*PixelperMeter);
+        	return Math.round(_diameterInMeter*Coordinator.PixelperMeter);
+        }
+        public function get volumeM3() : Number{
+            //return Math.PI*Math.pow(diameterInMeter/2, 2)*(heightInMeter-diameterInMeter)+4/3*Math.PI*Math.pow(diameterInMeter/2, 3);
+            return Math.PI*Math.pow(diameterInMeter/2, 2)*(heightInMeter-diameterInMeter/2)+2*1/24*Math.PI*Math.pow(diameterInMeter, 3);
+        }
+        private var _shellWeightKg:Number;
+        public function get shellWeightKg():Number
+        {
+        	return _shellWeightKg;
         }
         public function Tank(propellantType: int, heightInMeter : Number, diameterInMeter:Number, fillingRatio:Number = 1){
             _propellantShape = new Shape();
@@ -43,6 +55,7 @@ package component
             _heightInMeter = heightInMeter;
             _diameterInMeter = diameterInMeter;
             _fillingRatio = fillingRatio;
+            _shellWeightKg = 0;
             this.pivot[0] = diameterInPixel/2;
             this.pivot[1] = heightInPixel/2;
             draw();
@@ -51,10 +64,20 @@ package component
         {
         	return _fillingRatio;
         }
-        protected function set fillingRatio(value:Number):void
+        public function set fillingRatio(value:Number):void
         {
         	_fillingRatio = value;
+            if (0 > _fillingRatio){
+                _fillingRatio = 0;
+            }
+            if (1 < _fillingRatio){
+                _fillingRatio = 1;
+            }
              _fillingShape.y = (1-_fillingRatio)*heightInPixel;
+        }
+        public override function get weightKg():Number
+        {
+        	return _shellWeightKg + Propellant.propellant(_propellantType).densityKgM_3*volumeM3;
         }
         public override function draw():void{
             this.graphics.clear();
@@ -62,20 +85,20 @@ package component
             this.drawPropellant();
             this.drawFilling();
         }
-        private function drawCoque(target:Graphics):void{
-            target.moveTo(0, pivotX);
-            target.cubicCurveTo(pivotX/2, 0, pivotX*3/2, 0, diameterInPixel, pivotX);
-            target.lineTo(diameterInPixel, heightInPixel-pivotX);
-            target.cubicCurveTo(pivotX*3/2, heightInPixel, pivotX/2, heightInPixel, 0, heightInPixel-pivotX);
-            target.lineTo(0, pivotX);
+        private function drawShell(target:Graphics):void{
+            target.moveTo(0, diameterInPixel/4);
+            target.cubicCurveTo(diameterInPixel/4, -diameterInPixel/10, 3*diameterInPixel/4, -diameterInPixel/10, diameterInPixel, diameterInPixel/4);
+            target.lineTo(diameterInPixel, heightInPixel-diameterInPixel/4);
+            target.cubicCurveTo(diameterInPixel/4*3, heightInPixel+diameterInPixel/10, diameterInPixel/4, heightInPixel+diameterInPixel/10, 0, heightInPixel-diameterInPixel/4);
+            target.lineTo(0, diameterInPixel/4);
         }
         private function drawTank():void{
             this.graphics.lineStyle(2, 0x000000, 1);
-            this.drawCoque(this.graphics);
+            this.drawShell(this.graphics);
         }
         private function drawPropellant():void{
             _propellantShape.graphics.beginFill(Propellant.propellant(_propellantType).colorRGB, 1);
-            this.drawCoque(_propellantShape.graphics);
+            this.drawShell(_propellantShape.graphics);
             _propellantShape.graphics.endFill();
         }
         private function drawFilling():void{
@@ -84,5 +107,6 @@ package component
             _fillingShape.graphics.endFill();
             _fillingShape.y = (1-_fillingRatio)*heightInPixel;
         }
+        
     }
 }

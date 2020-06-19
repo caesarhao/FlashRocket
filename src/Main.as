@@ -8,18 +8,21 @@ package
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
-	import component.propellant.PropellantType;
+	import propellant.PropellantType;
+	import coordinator.Coordinator;
 	public class Main extends Sprite
 	{
+		private var coord : Coordinator;
 		private var nclick:uint = 0;
 		private var tf:TextField;
 		private var eng:Engine;
 		private var tank : Tank;
 		public function Main()
 		{
+			coord = new Coordinator(this);
 			tf = new TextField();
 			tf.width = 200;
-			tf.text = "Hello World";
+			tf.text = "" + Coordinator.frameRate;
 			tf.x = stage.stageWidth/2-tf.textWidth/2;
 			tf.y = 0;
 			addChild(tf);
@@ -53,11 +56,11 @@ package
 			}
 			else if(e.keyCode == Keyboard.UP){
 				eng.y --;
-				tank.y --;
+				tank.fillingRatio += 0.1;
 			}
 			else if(e.keyCode == Keyboard.DOWN){
 				eng.y ++;
-				tank.y ++;
+				tank.fillingRatio -= 0.1;
 			}
 			else{
 

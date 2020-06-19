@@ -1,6 +1,8 @@
 package component
 {
     public class Fairing extends RocketComponent{
+        protected var heightInMeter : Number;
+        protected var diameterInMeter : Number;
         public function Fairing(){
 
         }

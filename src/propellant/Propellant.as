@@ -1,4 +1,4 @@
-package component.propellant
+package propellant
 {
     public class Propellant {
 /*
@@ -22,6 +22,7 @@ package component.propellant
             return _colorRGB;
         }
 */
+        public static const isSolid:Boolean = false;
         public static const type:int = 0;
         public static const temperatureK:Number = 0; // K
         public static const densityKgM_3:Number = 0; // Kg/M3

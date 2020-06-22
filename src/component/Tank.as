@@ -6,6 +6,7 @@ package component
     import flash.display.Graphics;
     import propellant.Propellant;
     import coordinator.Coordinator;
+    import flash.events.Event;
 
     public class Tank extends RocketComponent{
         private var _propellantType:int;
@@ -74,6 +75,7 @@ package component
                 _fillingRatio = 1;
             }
              _fillingShape.y = (1-_fillingRatio)*heightInPixel;
+            _fillingShape.height = _fillingRatio*heightInPixel;
         }
         public override function get weightKg():Number
         {
@@ -103,10 +105,10 @@ package component
         }
         private function drawFilling():void{
             _fillingShape.graphics.beginFill(0x000000, 1);
-            _fillingShape.graphics.drawRect(0,0,diameterInPixel,heightInPixel);
+            _fillingShape.graphics.drawRect(0,0,diameterInPixel,heightInPixel*_fillingRatio);
             _fillingShape.graphics.endFill();
             _fillingShape.y = (1-_fillingRatio)*heightInPixel;
         }
-        
+
     }
 }

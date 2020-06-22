@@ -48,11 +48,11 @@ package
 		private function onKeyDownStage(e:KeyboardEvent):void{
 			if(e.keyCode == Keyboard.LEFT){
 				eng.x --;
-				tank.x --;
+				tank.pivotRotation -= 10;
 			}
 			else if(e.keyCode == Keyboard.RIGHT){
 				eng.x ++;
-				tank.x ++;
+				tank.pivotRotation += 10;
 			}
 			else if(e.keyCode == Keyboard.UP){
 				eng.y --;

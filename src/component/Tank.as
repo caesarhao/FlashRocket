@@ -57,8 +57,11 @@ package component
             _diameterInMeter = diameterInMeter;
             _fillingRatio = fillingRatio;
             _shellWeightKg = 0;
-            this.pivot[0] = diameterInPixel/2;
-            this.pivot[1] = heightInPixel/2;
+            this.center.x = diameterInPixel/2;
+            this.center.y = heightInPixel/2;
+            this.pivot.x = diameterInPixel/2;
+            this.pivot.y = heightInPixel/2;
+            setChildIndex(_pivotShape, this.numChildren-1);
             draw();
         }
         public function get fillingRatio():Number
@@ -82,7 +85,7 @@ package component
         	return _shellWeightKg + Propellant.propellant(_propellantType).densityKgM_3*volumeM3;
         }
         public override function draw():void{
-            this.graphics.clear();
+            super.draw();
             this.drawTank();
             this.drawPropellant();
             this.drawFilling();

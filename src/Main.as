@@ -27,8 +27,8 @@ package
 			tf.y = 0;
 			addChild(tf);
 			eng = new Engine();
-			eng.x = stage.stageWidth/2 - eng.pivotX;
-			eng.y = stage.stageHeight/2 - eng.pivotY;
+			eng.x = stage.stageWidth/2 - eng.centerX;
+			eng.y = stage.stageHeight/2 - eng.centerY;
 			addChild(eng);
 			tank = new Tank(PropellantType.RP1, 10, 3, 0.3);
 			tank.x = 200;
@@ -47,12 +47,12 @@ package
 		}
 		private function onKeyDownStage(e:KeyboardEvent):void{
 			if(e.keyCode == Keyboard.LEFT){
-				eng.x --;
-				tank.pivotRotation -= 10;
+				eng.centerRotation -= 10;
+				tank.centerRotation -= 10;
 			}
 			else if(e.keyCode == Keyboard.RIGHT){
-				eng.x ++;
-				tank.pivotRotation += 10;
+				eng.centerRotation += 10;
+				tank.centerRotation += 10;
 			}
 			else if(e.keyCode == Keyboard.UP){
 				eng.y --;

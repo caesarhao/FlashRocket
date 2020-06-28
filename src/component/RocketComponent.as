@@ -83,13 +83,13 @@ package component{
             if (this.rotation == degree) {
                 return;
             }
-            degree -= this.rotation;
+            // come back to initial state first.
+            this.rotation = 0;
             var matrix:Matrix = this.transform.matrix;
-            var rect:Rectangle = this.getBounds(this.parent);
 
-            matrix.translate(-(rect.left + (rect.width / 2)), -(rect.top + (rect.height / 2)));
+            matrix.translate(-this.pivotX, -this.pivotY);
             matrix.rotate(degree*Math.PI/180);
-            matrix.translate(rect.left + (rect.width / 2), rect.top + (rect.height / 2));
+            matrix.translate(this.pivotX, this.pivotY);
             this.transform.matrix = matrix;
         }
     }

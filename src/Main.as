@@ -47,11 +47,11 @@ package
 		}
 		private function onKeyDownStage(e:KeyboardEvent):void{
 			if(e.keyCode == Keyboard.LEFT){
-				eng.centerRotation -= 10;
+				eng.pivotRotation -= 10;
 				tank.centerRotation -= 10;
 			}
 			else if(e.keyCode == Keyboard.RIGHT){
-				eng.centerRotation += 10;
+				eng.pivotRotation += 10;
 				tank.centerRotation += 10;
 			}
 			else if(e.keyCode == Keyboard.UP){

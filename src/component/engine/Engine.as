@@ -16,8 +16,8 @@ package component.engine{
         public function Engine(){
             this.center.x = this.x + this.width/2;
             this.center.y = this.y + this.height/2;
-            this.pivot.x = this.x + 100;
-            this.pivot.y = this.y;
+            this.pivot.x = this.centerX;
+            this.pivot.y = this.centerY;
             setChildIndex(_pivotShape, this.numChildren-1);
             draw();
         }
@@ -44,7 +44,7 @@ package component.engine{
             var matr:Matrix = new Matrix();
             matr.createGradientBox(10, 10, Math.PI / 2, 0, 0);
             this.graphics.beginGradientFill(GradientType.LINEAR,[0xFF0000, 0x0000FF], [1, 1], [0x00, 0xFF], matr, SpreadMethod.REFLECT);
-            this.graphics.drawRect(0, 0, 200, 100);
+            this.graphics.drawRoundRect(-100, -50, 200, 100, 50);
             this.graphics.endFill();
         }
     }

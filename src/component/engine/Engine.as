@@ -14,12 +14,14 @@ package component.engine{
         protected var _specificImpulseSL_S: Number;
         protected var _specificImpulseVAC_S: Number;
         public function Engine(){
-            this.center.x = this.x + this.width/2;
-            this.center.y = this.y + this.height/2;
-            this.pivot.x = this.centerX;
-            this.pivot.y = this.centerY;
+            this.center.x = 50;
+            this.center.y = 40;
+            this.pivot.x = 0;
+            this.pivot.y = 0;
             setChildIndex(_pivotShape, this.numChildren-1);
+            setChildIndex(_centerShape, this.numChildren-1);
             draw();
+            moveCenter();
         }
         public function get nChambers():int{
             return _nChambers;
@@ -44,7 +46,7 @@ package component.engine{
             var matr:Matrix = new Matrix();
             matr.createGradientBox(10, 10, Math.PI / 2, 0, 0);
             this.graphics.beginGradientFill(GradientType.LINEAR,[0xFF0000, 0x0000FF], [1, 1], [0x00, 0xFF], matr, SpreadMethod.REFLECT);
-            this.graphics.drawRoundRect(-100, -50, 200, 100, 50);
+            this.graphics.drawRoundRect(0, 0, 200, 100, 50);
             this.graphics.endFill();
         }
     }

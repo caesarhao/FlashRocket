@@ -62,7 +62,9 @@ package component
             this.pivot.x = diameterInPixel/2;
             this.pivot.y = heightInPixel/2;
             setChildIndex(_pivotShape, this.numChildren-1);
+            setChildIndex(_centerShape, this.numChildren-1);
             draw();
+            moveCenter();
         }
         public function get fillingRatio():Number
         {

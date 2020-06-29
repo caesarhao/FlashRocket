@@ -37,6 +37,11 @@ package
 			this.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDownStage);
 			this.stage.addEventListener(MouseEvent.CLICK, onMouseClickStage);
 			this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+			this.graphics.lineStyle(1, 0xEE0000, 1);
+			this.graphics.moveTo(250, 0);
+			this.graphics.lineTo(250, 400);
+			this.graphics.moveTo(0, 200);
+			this.graphics.lineTo(500, 200);
 		}
 		private function onEnterFrame(e : Event):void{
 			nclick++;

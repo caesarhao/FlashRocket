@@ -10,6 +10,7 @@ package
 	import flash.ui.Keyboard;
 	import propellant.PropellantType;
 	import coordinator.Coordinator;
+	import component.RocketStage;
 	public class Main extends Sprite
 	{
 		private var coord : Coordinator;
@@ -17,6 +18,7 @@ package
 		private var tf:TextField;
 		private var eng:Engine;
 		private var tank : Tank;
+		private var rkstg : RocketStage;
 		public function Main()
 		{
 			coord = new Coordinator(this);
@@ -34,6 +36,11 @@ package
 			tank.x = 200;
 			tank.y = 200;
 			addChild(tank);
+			rkstg = RocketStage.create_CZ_5_500();
+			rkstg.draw();
+			rkstg.x = 300;
+			rkstg.y = 300;
+			addChild(rkstg);
 			this.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDownStage);
 			this.stage.addEventListener(MouseEvent.CLICK, onMouseClickStage);
 			this.addEventListener(Event.ENTER_FRAME, onEnterFrame);

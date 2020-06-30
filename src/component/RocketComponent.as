@@ -6,7 +6,7 @@ package component{
     import flash.geom.Rectangle;
     import flash.display.Shape;
     public class RocketComponent extends Sprite{
-        private var _weightKg:Number;
+        protected var _weightKg:Number;
         protected var _pivotShape : Shape;
         protected var _centerShape : Shape;
         public function get weightKg():Number

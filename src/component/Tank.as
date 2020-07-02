@@ -57,14 +57,15 @@ package component
             _diameterInMeter = diameterInMeter;
             _fillingRatio = fillingRatio;
             _shellWeightKg = 0;
+            _edge.width = diameterInPixel;
+            _edge.height = heightInPixel;
             this.center.x = diameterInPixel/2;
             this.center.y = heightInPixel/2;
-            this.pivot.x = diameterInPixel/2;
-            this.pivot.y = heightInPixel/2;
-            setChildIndex(_pivotShape, this.numChildren-1);
-            setChildIndex(_centerShape, this.numChildren-1);
-            draw();
-            moveCenter();
+            this.pivot.x = 0;
+            this.pivot.y = 0;
+            //setChildIndex(_pivotShape, this.numChildren-1);
+            //setChildIndex(_centerShape, this.numChildren-1);
+            
         }
         public function get fillingRatio():Number
         {
@@ -91,6 +92,7 @@ package component
             this.drawTank();
             this.drawPropellant();
             this.drawFilling();
+            //this.moveCenter();
         }
         private function drawShell(target:Graphics):void{
             target.moveTo(0, diameterInPixel/4);

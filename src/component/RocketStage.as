@@ -7,6 +7,7 @@ package component
     import flash.display.GradientType;
     import flash.display.SpreadMethod;
     import flash.display.InterpolationMethod;
+    import propellant.PropellantType;
 
     public class RocketStage extends RocketComponent{
         private var _engs:Vector.<Engine>;
@@ -44,7 +45,19 @@ package component
         {
         	return _shellWeightKg;
         }
-
+        public function get maxEngHeightM():Number{
+            var ret : Number = 0;
+            for each(var eng:Engine in _engs)
+            {
+                if (eng != null && eng.height_M > ret){
+                    ret = eng.height_M;
+                }
+            }
+            return ret;
+        }
+        public function get maxEngHeightPx():Number{
+            return maxEngHeightM*Coordinator.PixelperMeter;
+        }
         public function RocketStage(engNum:uint = 0, tankNum:uint = 0){
             _shellShape = new Shape();
             addChild(_shellShape);
@@ -64,44 +77,65 @@ package component
         }
         public override function draw():void{
             super.draw();
-            var currentY : Number = 0;
-        /*
+            var X : Number = this.left;
+            var Y : Number = this.top + 10;
+        
             for each (var j : Tank in _tanks){
+                j.draw();
                 addChild(j);
-                j.x = pivotX;
-                j.y = currentY;
-                currentY += j.heightInPixel;
+                j.x = X + (this.diameterPixel-j.diameterInPixel)/2;
+                j.y = Y;
+                Y += (j.heightInPixel + 5);
             }
+            Y = this.bottom - this.maxEngHeightPx;
+            X = this.left;
+        
             for each (var i : Engine in _engs){
+                i.draw();
                 addChild(i);
-                //TODO
+                i.x = X;
+                i.y = Y;
+                X += (i.diameter_Px + 5);
             }
-            */
+            
             drawShell();
-            moveCenter();
+            //moveCenter();
         }
         private function drawShell():void{
+            var lenPxWoEng:Number = lengthPixel - maxEngHeightPx;
+            var delt : Number = 10;
             var matr:Matrix = new Matrix();
-            matr.createGradientBox(diameterPixel, lengthPixel, 0, -diameterPixel/2, 0);
+            matr.createGradientBox(diameterPixel, delt, 0, -diameterPixel/2, 0);
+            _shellShape.graphics.beginGradientFill(GradientType.LINEAR,
+                [0x0000FF, 0xFFFFFF, 0x0000FF], [1, 1, 1], [0, 127, 255], matr, 
+                SpreadMethod.REFLECT, InterpolationMethod.RGB);
+            _shellShape.graphics.drawRect(-diameterPixel/2, -lenPxWoEng/2, diameterPixel, delt);
+            _shellShape.graphics.endFill();
+            matr.createGradientBox(diameterPixel, lenPxWoEng-delt, 0, -diameterPixel/2, 0);
             _shellShape.graphics.beginGradientFill(GradientType.LINEAR,
                 [0x606060, 0xFFFFFF, 0x606060], [1, 1, 1], [0, 127, 255], matr, 
                 SpreadMethod.REFLECT, InterpolationMethod.RGB);
-            _shellShape.graphics.drawRect(-diameterPixel/2, -lengthPixel/2, diameterPixel, lengthPixel);
+            _shellShape.graphics.drawRect(-diameterPixel/2, -lenPxWoEng/2+delt, diameterPixel, lenPxWoEng-delt);
             _shellShape.graphics.endFill();
         }
         public static function create_CZ_5_500() : RocketStage{
-            var rs : RocketStage = new RocketStage(0, 02);
+            var rs : RocketStage = new RocketStage(2, 2);
             //rs.name = "CZ-5-500";
             rs._diameterMeter = 5;
             rs._lengthMeter = 31.7;
+            rs._edge.left = -rs.diameterPixel/2;
+            rs._edge.top = -rs.lengthPixel/2;
+            rs._edge.width = rs.diameterPixel;
+            rs._edge.height = rs.lengthPixel;
             rs._shellWeightKg = 1600;
             // Add Tanks.
-            //rs._tanks[0] = new Tank();
-            //rs._tanks[1] = new Tank();
+            rs._tanks[0] = new Tank(PropellantType.LOX,  8, 4);
+            rs._tanks[1] = new Tank(PropellantType.LH2, 16, 4);
             // Add Engines.
-            //rs._engs[0] = new Engine();
-            //rs._engs[1] = new Engine();
+            rs._engs[0] = Engine.create_YF_77();
+            rs._engs[1] = Engine.create_YF_77();
             rs.draw();
+            rs._shellShape.alpha = 0.3;
             return rs;
         }
     }

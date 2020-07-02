@@ -18,7 +18,7 @@ package
 		private var tf:TextField;
 		private var eng:Engine;
 		private var tank : Tank;
-		private var rkstg : RocketStage;
+		private var rs : RocketStage;
 		public function Main()
 		{
 			coord = new Coordinator(this);
@@ -29,18 +29,18 @@ package
 			tf.y = 0;
 			addChild(tf);
 			eng = new Engine();
-			eng.x = stage.stageWidth/2 - eng.centerX;
-			eng.y = stage.stageHeight/2 - eng.centerY;
+			eng.x = 250;
+			eng.y = 200;
 			addChild(eng);
 			tank = new Tank(PropellantType.RP1, 10, 3, 0.3);
 			tank.x = 200;
 			tank.y = 200;
 			addChild(tank);
-			rkstg = RocketStage.create_CZ_5_500();
-			rkstg.draw();
-			rkstg.x = 300;
-			rkstg.y = 300;
-			addChild(rkstg);
+			rs = RocketStage.create_CZ_5_500();
+			rs.draw();
+			rs.x = 250;
+			rs.y = 200;
+			addChild(rs);
 			this.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDownStage);
 			this.stage.addEventListener(MouseEvent.CLICK, onMouseClickStage);
 			this.addEventListener(Event.ENTER_FRAME, onEnterFrame);

@@ -5,7 +5,9 @@ package component{
     import flash.geom.Matrix;
     import flash.geom.Rectangle;
     import flash.display.Shape;
+    import spark.primitives.Rect;
     public class RocketComponent extends Sprite{
+        protected var _edge : Rect;
         protected var _weightKg:Number;
         protected var _pivotShape : Shape;
         protected var _centerShape : Shape;
@@ -15,8 +17,8 @@ package component{
         }
         protected var _center : Point;
         public function get center():Point{
-            this._center.x = this.width/2;
-            this._center.y = this.height/2;
+            this._center.x = bounds.left + bounds.width/2;
+            this._center.y = bounds.top + bounds.height/2;
             return _center;
         }
         public function get centerX():Number{
@@ -24,6 +26,27 @@ package component{
         }
         public function get centerY():Number{
             return center.y;
+        }
+        public function get bounds() : Rectangle{
+            return this.getBounds(this);
+        }
+        public function get top(): Number{
+            return bounds.top;
+        }
+        public function get bottom(): Number{
+            return bounds.bottom;
+        }
+        public function get left(): Number{
+            return bounds.left;
+        }
+        public function get right(): Number{
+            return bounds.right;
+        }
+        public function get topLeft(): Point{
+            return bounds.topLeft;
+        }
+        public function get bottomRight(): Point{
+            return bounds.bottomRight;
         }
         protected var _pivot:Point;
 
@@ -40,13 +63,20 @@ package component{
         	return pivot.y;
         }
         public function RocketComponent(weightKg : Number = 0){
+            _edge = new Rect();
+            _edge.left = 0;
+            _edge.top = 0;
             _center = new Point(0, 0);
             _pivot = new Point(0, 0);
             _pivotShape = new Shape();
-            addChild(_pivotShape);
+            //addChild(_pivotShape);
             _centerShape = new Shape();
-            addChild(_centerShape);
+            //addChild(_centerShape);
             _weightKg = weightKg;
+        }
+        public function drawEdge():void{
+            graphics.lineStyle(1, 0x000000, 0);
+            graphics.drawRect(_edge.left+0, _edge.top+0, _edge.width, _edge.height);
         }
         public function drawPivot():void{
             var R:Number = 5;
@@ -102,8 +132,9 @@ package component{
         }
         public function draw():void{
             this.graphics.clear();
-            this.drawPivot();
-            this.drawCenter();
+            this.drawEdge();
+            //this.drawPivot();
+            //this.drawCenter();
         }
         public function get centerRotation():Number{
             return this.rotation;

@@ -89,13 +89,18 @@ package component
             }
             Y = this.bottom - this.maxEngHeightPx;
             X = this.left;
-        
+            var sumEngsWids : Number = 0;
+            for each(var en : Engine in _engs){
+                sumEngsWids += en.diameter_Px;
+            }
+            var delt : Number = (this.size.x - sumEngsWids)/(_engs.length-1);
+            
             for each (var i : Engine in _engs){
                 i.draw();
                 addChild(i);
                 i.x = X;
                 i.y = Y;
-                X += (i.diameter_Px + 5);
+                X += delt;
             }
             
             drawShell();
@@ -109,13 +114,13 @@ package component
             _shellShape.graphics.beginGradientFill(GradientType.LINEAR,
                 [0x0000FF, 0xFFFFFF, 0x0000FF], [1, 1, 1], [0, 127, 255], matr, 
                 SpreadMethod.REFLECT, InterpolationMethod.RGB);
-            _shellShape.graphics.drawRect(-diameterPixel/2, -lenPxWoEng/2, diameterPixel, delt);
+            _shellShape.graphics.drawRect(-diameterPixel/2, -lengthPixel/2, diameterPixel, delt);
             _shellShape.graphics.endFill();
             matr.createGradientBox(diameterPixel, lenPxWoEng-delt, 0, -diameterPixel/2, 0);
             _shellShape.graphics.beginGradientFill(GradientType.LINEAR,
                 [0x606060, 0xFFFFFF, 0x606060], [1, 1, 1], [0, 127, 255], matr, 
                 SpreadMethod.REFLECT, InterpolationMethod.RGB);
-            _shellShape.graphics.drawRect(-diameterPixel/2, -lenPxWoEng/2+delt, diameterPixel, lenPxWoEng-delt);
+            _shellShape.graphics.drawRect(-diameterPixel/2, -lengthPixel/2+delt, diameterPixel, lenPxWoEng-delt);
             _shellShape.graphics.endFill();
         }
         public static function create_CZ_5_500() : RocketStage{

@@ -6,6 +6,7 @@ package component.engine{
     import component.RocketComponent;
     import flash.geom.Matrix;
     import coordinator.Coordinator;
+    import libraries.RegularPolygon;
     public class Engine extends RocketComponent{
         private var _height_M : Number = 0;
         private var _diameter_M : Number = 0;
@@ -57,7 +58,8 @@ package component.engine{
             var matr:Matrix = new Matrix();
             matr.createGradientBox(10, 10, Math.PI / 2, 0, 0);
             this.graphics.beginGradientFill(GradientType.LINEAR,[0xFF0000, 0x0000FF], [1, 1], [0x00, 0xFF], matr, SpreadMethod.REFLECT);
-            this.graphics.drawRect(-this.diameter_Px/2, 0, this.diameter_Px, this.height_Px);
+            //this.graphics.drawRect(-this.diameter_Px/2, 0, this.diameter_Px, this.height_Px);
+            RegularPolygon.drawRegPolygon(this.graphics, 0, this.height_Px/2, this.diameter_Px/2, 20);
             this.graphics.endFill();
             //moveCenter();
         }

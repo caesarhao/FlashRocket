@@ -1,4 +1,4 @@
-//https://sprite.slicker.me/flash/tutorial.htm
+
 package component{
     import flash.display.Sprite;
     import flash.geom.Point;

@@ -1,7 +1,7 @@
 package propellant
 {
     public final class PropellantType{
-        public static var ENUM_VAL_NUM : int = 0;
+        private static var ENUM_VAL_NUM : int = 0;
         public static const HTPB:int = ENUM_VAL_NUM++;
         public static const LOX:int = ENUM_VAL_NUM++;
         public static const LH2:int = ENUM_VAL_NUM++;

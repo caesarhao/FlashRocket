@@ -11,6 +11,7 @@ package
 	import propellant.PropellantType;
 	import coordinator.Coordinator;
 	import component.RocketStage;
+	import libraries.Debug;
 	public class Main extends Sprite
 	{
 		private var coord : Coordinator;
@@ -21,6 +22,8 @@ package
 		private var rs : RocketStage;
 		public function Main()
 		{
+			Debug.debugLevel = Debug.ALL;
+			Debug.init();
 			coord = new Coordinator(this);
 			tf = new TextField();
 			tf.width = 200;

@@ -4,6 +4,9 @@ package libraries
     import flash.display.GraphicsPathCommand;
 
     public class RegularPolygon{
+        public function RegularPolygon(){
+            throw new ArgumentError("The RegularPolygon Class cannot be instanicated.");
+        }
         public static function drawRegPolygon(target : Graphics, x : Number, y : Number, radius : Number, nEdges : int, initAngle : Number = Math.PI/(-2)):void{
             var deltAngle : Number = 2*Math.PI/nEdges;
             var commands : Vector.<int> = new Vector.<int>((nEdges + 1), true);

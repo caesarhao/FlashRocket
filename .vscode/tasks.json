@@ -4,9 +4,20 @@
 		{
 			"type": "actionscript",
 			"debug": true,
-			"group": "build",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
 			"problemMatcher": [],
 			"label": "ActionScript: compile debug - asconfig.json"
+		},
+		{
+			"type": "actionscript",
+			"debug": false,
+			"group": "build",
+			"problemMatcher": [],
+			"label": "ActionScript: compile release - asconfig.json"
 		}
 	]
 }
+

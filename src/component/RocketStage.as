@@ -8,6 +8,7 @@ package component
     import flash.display.SpreadMethod;
     import flash.display.InterpolationMethod;
     import propellant.PropellantType;
+    import libraries.MoreDraw;
 
     public class RocketStage extends RocketComponent{
         private var _engs:Vector.<Engine>;
@@ -19,6 +20,10 @@ package component
         public function get tanks():Vector.<Tank>
         {
         	return _tanks;
+        }
+        private var _withHead : Boolean;
+        public function get withHead() : Boolean{
+            return _withHead;
         }
         protected var _shellShape : Shape;
         private var _lengthMeter:Number;
@@ -58,11 +63,12 @@ package component
         public function get maxEngHeightPx():Number{
             return maxEngHeightM*Coordinator.PixelperMeter;
         }
-        public function RocketStage(engNum:uint = 0, tankNum:uint = 0){
+        public function RocketStage(engNum:uint = 0, tankNum:uint = 0, withHead : Boolean = false){
             _shellShape = new Shape();
             addChild(_shellShape);
             _engs = new Vector.<Engine>(engNum, false);
             _tanks = new Vector.<Tank>(tankNum, false);
+            _withHead = withHead;
         }
         public override function get weightKg():Number
         {
@@ -78,7 +84,7 @@ package component
         public override function draw():void{
             super.draw();
             var X : Number = this.left;
-            var Y : Number = this.top + 10;
+            var Y : Number = this.top + this.diameterPixel/2;
         
             for each (var j : Tank in _tanks){
                 j.draw();
@@ -108,13 +114,17 @@ package component
         }
         private function drawShell():void{
             var lenPxWoEng:Number = lengthPixel - maxEngHeightPx;
-            var delt : Number = 10;
+            var delt : Number = diameterPixel/2;
             var matr:Matrix = new Matrix();
             matr.createGradientBox(diameterPixel, delt, 0, -diameterPixel/2, 0);
             _shellShape.graphics.beginGradientFill(GradientType.LINEAR,
                 [0x0000FF, 0xFFFFFF, 0x0000FF], [1, 1, 1], [0, 127, 255], matr, 
                 SpreadMethod.REFLECT, InterpolationMethod.RGB);
-            _shellShape.graphics.drawRect(-diameterPixel/2, -lengthPixel/2, diameterPixel, delt);
+            if(this.withHead){
+                MoreDraw.drawRegPolygon(_shellShape.graphics, 0, -lengthPixel/2+delt/2, delt, 3);
+            } else {
+                _shellShape.graphics.drawRect(-diameterPixel/2, -lengthPixel/2, diameterPixel, delt);
+            }
             _shellShape.graphics.endFill();
             matr.createGradientBox(diameterPixel, lenPxWoEng-delt, 0, -diameterPixel/2, 0);
             _shellShape.graphics.beginGradientFill(GradientType.LINEAR,
@@ -124,7 +134,7 @@ package component
             _shellShape.graphics.endFill();
         }
         public static function create_CZ_5_500() : RocketStage{
-            var rs : RocketStage = new RocketStage(2, 2);
+            var rs : RocketStage = new RocketStage(2, 2, true);
             //rs.name = "CZ-5-500";
             rs._diameterMeter = 5;
             rs._lengthMeter = 31.7;

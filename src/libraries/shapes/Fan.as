@@ -20,9 +20,6 @@ package libraries.shapes
             _startAngle = startAngle;
             _angle = angle;
         }
-        public override function draw():void{
-
-        }
         public override function drawOnTarget(target : Graphics, x : Number, y : Number):void{
 
         }

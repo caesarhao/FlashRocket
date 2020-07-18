@@ -10,9 +10,6 @@ package libraries.shapes
         public function Circle(radius: Number = 0){
             _radius = radius;
         }
-        public override function draw():void{
-
-        }
         public override function drawOnTarget(target : Graphics, x : Number, y : Number):void{
 
         }

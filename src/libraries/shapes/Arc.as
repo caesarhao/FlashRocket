@@ -21,8 +21,13 @@ package libraries.shapes
             _angle = angle;
         }
         public override function drawOnTarget(target : Graphics, x : Number, y : Number):void{
-            var segs : int = Math.ceil(this.angle/(Math.PI/4));
-            var segs_floor : int = Math.floor(this.angle/(Math.PI/4));
+            var eachSeg : Number = Math.PI/4;
+            if (angle < 0){ // for minus angle
+                eachSeg = 0 - eachSeg;
+            }
+            var segs : int = Math.ceil(angle/eachSeg);
+            var segs_floor : int = Math.floor(angle/eachSeg);
+            var factor : Number = 2.0 - Math.cos(eachSeg/2);
             var ax : Number = x;
             var ay : Number = y;
             var bx : Number = x;
@@ -30,17 +35,26 @@ package libraries.shapes
             var cx : Number = x;
             var cy : Number = y;
             for (var i : int = 0; i < segs_floor; i++){
-                ax = x + radius * Math.cos(startAngle+i*(Math.PI/4));
-                ay = y + radius * Math.sin(startAngle+i*(Math.PI/4));
-                cx = x + radius * Math.cos(startAngle+i*(Math.PI/8));
-                cy = y + radius * Math.sin(startAngle+i*(Math.PI/8));
-                bx = x + radius * Math.cos(startAngle+(i+1)*(Math.PI/4));
-                by = y + radius * Math.sin(startAngle+(i+1)*(Math.PI/4));
+                ax = x + radius * Math.cos(startAngle+i*eachSeg);
+                ay = y + radius * Math.sin(startAngle+i*eachSeg);
+                cx = x + factor * radius * Math.cos(startAngle+(0.5+i)*eachSeg);
+                cy = y + factor * radius * Math.sin(startAngle+(0.5+i)*eachSeg);
+                bx = x + radius * Math.cos(startAngle+(i+1)*eachSeg);
+                by = y + radius * Math.sin(startAngle+(i+1)*eachSeg);
                 target.moveTo(ax, ay);
                 target.curveTo(cx, cy, bx, by);
             }
-            if(segs_floor < segs){ // one additional seg smaller than PI/4.
-
+            if(segs_floor < segs){ // one additional seg smaller than eachSeg.
+                var lastSeg : Number = angle - eachSeg*segs_floor;
+                factor = 2.0 - Math.cos(lastSeg/2);
+                ax = x + radius * Math.cos(startAngle+segs_floor*eachSeg);
+                ay = y + radius * Math.sin(startAngle+segs_floor*eachSeg);
+                cx = x + factor * radius * Math.cos(startAngle+segs_floor*eachSeg+lastSeg/2);
+                cy = y + factor * radius * Math.sin(startAngle+segs_floor*eachSeg+lastSeg/2);
+                bx = x + radius * Math.cos(startAngle+angle);
+                by = y + radius * Math.sin(startAngle+angle);
+                target.moveTo(ax, ay);
+                target.curveTo(cx, cy, bx, by);
             }
         }
         public override function area():Number{

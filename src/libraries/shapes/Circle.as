@@ -11,7 +11,7 @@ package libraries.shapes
             _radius = radius;
         }
         public override function drawOnTarget(target : Graphics, x : Number, y : Number):void{
-
+            target.drawCircle(x, y, radius);
         }
         public override function area():Number{
             return (Math.PI*Math.pow(radius, 2));

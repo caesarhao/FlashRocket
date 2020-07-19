@@ -21,7 +21,11 @@ package libraries.shapes
             _angle = angle;
         }
         public override function drawOnTarget(target : Graphics, x : Number, y : Number):void{
-
+            target.moveTo(x, y);
+            target.lineTo((x+radius*Math.cos(startAngle)), (y+radius*Math.sin(startAngle)));
+            new Arc(radius, startAngle, angle).drawOnTarget(target, x, y);
+            target.moveTo((x+radius*Math.cos(startAngle+angle)), (y+radius*Math.sin(startAngle+angle)));
+            target.lineTo(x, y);
         }
         public override function area():Number{
             return (0.5*angle*Math.pow(radius, 2));

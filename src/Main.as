@@ -12,6 +12,8 @@ package
 	import coordinator.Coordinator;
 	import component.RocketStage;
 	import libraries.Debug;
+	import libraries.shapes.*;
+	import libraries.shapes.RectangleExt;
 	public class Main extends Sprite
 	{
 		private var coord : Coordinator;
@@ -53,6 +55,8 @@ package
 			this.graphics.lineTo(250, 400);
 			this.graphics.moveTo(0, 200);
 			this.graphics.lineTo(500, 200);
+			//new Arc(50, -Math.PI/2, -Math.PI/3).drawOnTarget(this.graphics, 100, 50);
+			//new RectangleExt(200, 100).drawOnTarget(this.graphics, 100, 50);
 		}
 		private function onEnterFrame(e : Event):void{
 			nclick++;

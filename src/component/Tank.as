@@ -7,6 +7,7 @@ package component
     import propellant.Propellant;
     import coordinator.Coordinator;
     import flash.events.Event;
+    import flash.text.TextField;
 
     public class Tank extends RocketComponent{
         private var _propellantType:int;
@@ -17,6 +18,7 @@ package component
         	return _propellantType;
         }
         private var _fillingRatio:Number;
+        private var _fillingRatioText : TextField;
         private var _heightInMeter:Number;
 
         public function get heightInMeter():Number
@@ -51,6 +53,9 @@ package component
             addChild(_propellantShape);
             _fillingShape = new Shape();
             addChild(_fillingShape);
+            _fillingRatioText = new TextField();
+            addChild(_fillingRatioText);
+
             _propellantShape.mask = _fillingShape;
             _propellantType = propellantType;
             _heightInMeter = heightInMeter;
@@ -82,6 +87,7 @@ package component
             }
              _fillingShape.y = (1-_fillingRatio)*heightInPixel;
             _fillingShape.height = _fillingRatio*heightInPixel;
+            _fillingRatioText.text = "" + Math.ceil(_fillingRatio*100) + "%";
         }
         public override function get weightKg():Number
         {
@@ -115,6 +121,10 @@ package component
             _fillingShape.graphics.drawRect(0,0,diameterInPixel,heightInPixel*_fillingRatio);
             _fillingShape.graphics.endFill();
             _fillingShape.y = (1-_fillingRatio)*heightInPixel;
+            _fillingRatioText.text = "100%";
+            _fillingRatioText.x = this.left + (this.Width - _fillingRatioText.textWidth)/2;
+            _fillingRatioText.y = this.top + (this.Height - _fillingRatioText.textHeight)/2;
+            _fillingRatioText.text = "" + Math.ceil(_fillingRatio*100) + "%";
         }
 
     }

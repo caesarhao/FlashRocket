@@ -48,6 +48,12 @@ package component{
         public function get bottomRight(): Point{
             return _edge.bottomRight;
         }
+        public function get Width() : Number{
+            return _edge.width;
+        }
+         public function get Height() : Number{
+            return _edge.height;
+        }
         public function get size():Point{
             return _edge.size;
         }

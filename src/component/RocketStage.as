@@ -94,12 +94,12 @@ package component
                 Y += (j.heightInPixel + 5);
             }
             Y = this.bottom - this.maxEngHeightPx;
-            X = this.left;
+            X = this.left + _engs[0].diameter_Px/2;
             var sumEngsWids : Number = 0;
             for each(var en : Engine in _engs){
                 sumEngsWids += en.diameter_Px;
             }
-            var delt : Number = (this.size.x - sumEngsWids)/(_engs.length-1);
+            var delt : Number = (this.diameterPixel - sumEngsWids)/(_engs.length-1) + _engs[0].diameter_Px;
             
             for each (var i : Engine in _engs){
                 i.draw();
@@ -121,7 +121,10 @@ package component
                 [0x0000FF, 0xFFFFFF, 0x0000FF], [1, 1, 1], [0, 127, 255], matr, 
                 SpreadMethod.REFLECT, InterpolationMethod.RGB);
             if(this.withHead){
-                MoreDraw.drawRegPolygon(_shellShape.graphics, 0, -lengthPixel/2+delt/2, delt, 3);
+                //MoreDraw.drawRegPolygon(_shellShape.graphics, 0, -lengthPixel/2+delt/2, delt, 3);
+                _shellShape.graphics.moveTo(diameterPixel/2, -lengthPixel/2+delt);
+                _shellShape.graphics.lineTo(-diameterPixel/2, -lengthPixel/2+delt);
+                _shellShape.graphics.curveTo(0, -lengthPixel/2-delt, diameterPixel/2, -lengthPixel/2+delt);
             } else {
                 _shellShape.graphics.drawRect(-diameterPixel/2, -lengthPixel/2, diameterPixel, delt);
             }
@@ -144,8 +147,8 @@ package component
             rs._edge.height = rs.lengthPixel;
             rs._shellWeightKg = 1600;
             // Add Tanks.
-            rs._tanks[0] = new Tank(PropellantType.LOX,  8, 4);
-            rs._tanks[1] = new Tank(PropellantType.LH2, 16, 4);
+            rs._tanks[0] = new Tank(PropellantType.LOX,  8, 4, 0.5);
+            rs._tanks[1] = new Tank(PropellantType.LH2, 16, 4, 0.8);
             // Add Engines.
             rs._engs[0] = Engine.create_YF_77();
             rs._engs[1] = Engine.create_YF_77();

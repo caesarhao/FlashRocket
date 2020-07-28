@@ -57,6 +57,10 @@ package
 			this.graphics.lineTo(500, 200);
 			//new Arc(50, -Math.PI/2, -Math.PI/3).drawOnTarget(this.graphics, 100, 50);
 			//new RectangleExt(200, 100).drawOnTarget(this.graphics, 100, 50);
+			var txtF : TextField = new TextField();
+			txtF.x = 50;
+			addChild(txtF);
+			txtF.text = "123456";
 		}
 		private function onEnterFrame(e : Event):void{
 			nclick++;

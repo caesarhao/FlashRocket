@@ -18,8 +18,6 @@ package component.engine{
         protected var _specificImpulseSL_S: Number;
         protected var _specificImpulseVAC_S: Number;
         public function Engine(){
-            this.center.x = 50;
-            this.center.y = 40;
             this.pivot.x = 0;
             this.pivot.y = 0;
         }
@@ -61,7 +59,7 @@ package component.engine{
             //this.graphics.drawRect(-this.diameter_Px/2, 0, this.diameter_Px, this.height_Px);
             MoreDraw.drawRegPolygon(this.graphics, 0, this.height_Px/2, this.diameter_Px/2, 20);
             this.graphics.endFill();
-            moveCenter();
+            this.drawEnd();
         }
         public static function create_YF_77():Engine{
             var eng : Engine = new Engine();

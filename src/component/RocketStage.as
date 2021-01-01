@@ -110,7 +110,7 @@ package component
             }
             
             drawShell();
-            //moveCenter();
+            moveCenter();
         }
         private function drawShell():void{
             var lenPxWoEng:Number = lengthPixel - maxEngHeightPx;
@@ -147,8 +147,8 @@ package component
             rs._edge.height = rs.lengthPixel;
             rs._shellWeightKg = 1600;
             // Add Tanks.
-            rs._tanks[0] = new Tank(PropellantType.LOX,  8, 4, 0.5);
-            rs._tanks[1] = new Tank(PropellantType.LH2, 16, 4, 0.8);
+            rs._tanks[0] = new Tank(PropellantType.LOX,  8, 4, 0.2);
+            rs._tanks[1] = new Tank(PropellantType.LH2, 16, 4, 0.1);
             // Add Engines.
             rs._engs[0] = Engine.create_YF_77();
             rs._engs[1] = Engine.create_YF_77();

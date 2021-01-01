@@ -98,7 +98,7 @@ package component
             this.drawTank();
             this.drawPropellant();
             this.drawFilling();
-            //this.moveCenter();
+            this.moveCenter();
         }
         private function drawShell(target:Graphics):void{
             target.moveTo(0, diameterInPixel/4);

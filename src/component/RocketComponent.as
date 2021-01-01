@@ -5,57 +5,13 @@ package component{
     import flash.geom.Matrix;
     import flash.geom.Rectangle;
     import flash.display.Shape;
-    public class RocketComponent extends Sprite{
-        public static var DEBUG : Boolean = true;
-        protected var _edge : Rectangle;
+    public class RocketComponent extends Component{
         protected var _weightKg:Number;
         protected var _pivotShape : Shape;
         protected var _centerShape : Shape;
         public function get weightKg():Number
         {
         	return _weightKg;
-        }
-        protected var _center : Point;
-        public function get center():Point{
-            this._center.x = edge.left + edge.width/2;
-            this._center.y = edge.top + edge.height/2;
-            return _center;
-        }
-        public function get centerX():Number{
-            return center.x;
-        }
-        public function get centerY():Number{
-            return center.y;
-        }
-        public function get edge() : Rectangle{
-            return this._edge;
-        }
-        public function get top(): Number{
-            return _edge.top;
-        }
-        public function get bottom(): Number{
-            return _edge.bottom;
-        }
-        public function get left(): Number{
-            return _edge.left;
-        }
-        public function get right(): Number{
-            return _edge.right;
-        }
-        public function get topLeft(): Point{
-            return _edge.topLeft;
-        }
-        public function get bottomRight(): Point{
-            return _edge.bottomRight;
-        }
-        public function get Width() : Number{
-            return _edge.width;
-        }
-         public function get Height() : Number{
-            return _edge.height;
-        }
-        public function get size():Point{
-            return _edge.size;
         }
         protected var _pivot:Point;
 
@@ -72,35 +28,19 @@ package component{
         	return pivot.y;
         }
         public function RocketComponent(weightKg : Number = 0){
-            _edge = new Rectangle();
-            _edge.left = 0;
-            _edge.top = 0;
-            _center = new Point(0, 0);
             _pivot = new Point(0, 0);
             _pivotShape = new Shape();
             addChild(_pivotShape);
             _centerShape = new Shape();
-            //addChild(_centerShape);
+            addChild(_centerShape);
             _weightKg = weightKg;
         }
-        public function drawEdge():void{
-            if(DEBUG){
-                graphics.lineStyle(1, 0xFF0000, 1);
-            }
-            else{
-                graphics.lineStyle(1, 0xFF0000, 0);
-            }
-            graphics.drawRect(_edge.left+0, _edge.top+0, _edge.width, _edge.height);
-        }
+        
         public function drawPivot():void{
             var R:Number = 5;
             var r:Number = 3;
             _pivotShape.graphics.lineStyle(1, 0x000000, 1);
             _pivotShape.graphics.drawCircle(pivotX, pivotY, R);
-            //_pivotShape.graphics.drawCircle(pivotX, pivotY, r);
-            //_pivotShape.graphics.moveTo(pivotX+r*Math.cos(Math.PI/4), pivotY-r*Math.cos(Math.PI/4)-2);
-            //_pivotShape.graphics.lineTo(pivotX+r*Math.cos(Math.PI/4), pivotY-r*Math.cos(Math.PI/4));
-            //_pivotShape.graphics.lineTo(pivotX+r*Math.cos(Math.PI/4)-2, pivotY-r*Math.cos(Math.PI/4));
             _pivotShape.graphics.beginFill(0x000000, 1);
             _pivotShape.graphics.moveTo(pivotX, pivotY-R);
             _pivotShape.graphics.lineTo(pivotX + R*Math.sqrt(3)/2, pivotY+R/2);
@@ -119,10 +59,6 @@ package component{
             var r:Number = 3;
             _centerShape.graphics.lineStyle(1, 0x000000, 1);
             
-            //_pivotShape.graphics.drawCircle(pivotX, pivotY, r);
-            //_pivotShape.graphics.moveTo(pivotX+r*Math.cos(Math.PI/4), pivotY-r*Math.cos(Math.PI/4)-2);
-            //_pivotShape.graphics.lineTo(pivotX+r*Math.cos(Math.PI/4), pivotY-r*Math.cos(Math.PI/4));
-            //_pivotShape.graphics.lineTo(pivotX+r*Math.cos(Math.PI/4)-2, pivotY-r*Math.cos(Math.PI/4));
             _centerShape.graphics.drawCircle(0, 0, R);
             _centerShape.graphics.beginFill(0x000000, 1);
             _centerShape.graphics.moveTo(0, 0);
@@ -135,8 +71,8 @@ package component{
             _centerShape.graphics.endFill();
         }
         public function moveCenter():void{
-            _centerShape.x = centerX-5;
-            _centerShape.y = centerY-5;
+            _centerShape.x = centerX;
+            _centerShape.y = centerY;
         }
         public function hideCenter():void{
             _centerShape.alpha = 0;
@@ -144,27 +80,10 @@ package component{
         public function showCenter():void{
             _centerShape.alpha = 1;
         }
-        public function draw():void{
-            this.graphics.clear();
-            this.drawEdge();
-            this.drawPivot();
-            //this.drawCenter();
-        }
-        public function get centerRotation():Number{
-            return this.rotation;
-        }
-        public function set centerRotation(degree : Number): void{
-            if (this.rotation == degree) {
-                return;
-            }
-            degree -= this.rotation;
-            var matrix:Matrix = this.transform.matrix;
-            var rect:Rectangle = this.getBounds(this.parent);
-
-            matrix.translate(-(rect.left + (rect.width / 2)), -(rect.top + (rect.height / 2)));
-            matrix.rotate(degree*Math.PI/180);
-            matrix.translate(rect.left + (rect.width / 2), rect.top + (rect.height / 2));
-            this.transform.matrix = matrix;
+        public override function draw():void{
+            super.draw();
+            //this.drawPivot();
+            this.drawCenter();
         }
         public function get pivotRotation():Number{
             return this.rotation;

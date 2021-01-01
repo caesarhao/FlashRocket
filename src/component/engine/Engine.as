@@ -61,7 +61,7 @@ package component.engine{
             //this.graphics.drawRect(-this.diameter_Px/2, 0, this.diameter_Px, this.height_Px);
             MoreDraw.drawRegPolygon(this.graphics, 0, this.height_Px/2, this.diameter_Px/2, 20);
             this.graphics.endFill();
-            //moveCenter();
+            moveCenter();
         }
         public static function create_YF_77():Engine{
             var eng : Engine = new Engine();

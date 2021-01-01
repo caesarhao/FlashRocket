@@ -37,7 +37,7 @@ package
 			eng.x = 250;
 			eng.y = 200;
 			addChild(eng);
-			tank = new Tank(PropellantType.RP1, 10, 3, 0.3);
+			tank = new Tank(PropellantType.RP1, 10, 3, 0.2);
 			tank.x = 200;
 			tank.y = 200;
 			addChild(tank);
@@ -47,8 +47,8 @@ package
 			rs.y = 200;
 			addChild(rs);
 			Debug.info("rocket stage is added");
-			//this.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDownStage);
-			//this.stage.addEventListener(MouseEvent.CLICK, onMouseClickStage);
+			this.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDownStage);
+			this.stage.addEventListener(MouseEvent.CLICK, onMouseClickStage);
 			//this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 			this.graphics.lineStyle(1, 0xEE0000, 1);
 			this.graphics.moveTo(250, 0);
@@ -71,25 +71,21 @@ package
 		}
 		private function onKeyDownStage(e:KeyboardEvent):void{
 			if(e.keyCode == Keyboard.LEFT){
-				eng.pivotRotation -= 10;
-				tank.centerRotation -= 10;
+				rs.rotation -= 10;
 			}
 			else if(e.keyCode == Keyboard.RIGHT){
-				eng.pivotRotation += 10;
-				tank.centerRotation += 10;
+				rs.rotation += 10;
 			}
 			else if(e.keyCode == Keyboard.UP){
-				eng.y --;
-				tank.fillingRatio += 0.1;
+				rs.y --;
 			}
 			else if(e.keyCode == Keyboard.DOWN){
-				eng.y ++;
-				tank.fillingRatio -= 0.1;
+				rs.y ++;
 			}
 			else{
 
 			}
-			tf.text = "Engine Coord: x "+eng.x + " y " + eng.y;
+			tf.text = "Engine Coord: x "+rs.x + " y " + rs.y;
 		}
 	}
 }

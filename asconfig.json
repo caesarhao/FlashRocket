@@ -1,9 +1,14 @@
 {
+	"type": "app",
 	"compilerOptions": {
 		"source-path": [
 			"src"
 		],
-		"output": "bin/Main.swf"
+		"output": "bin/FlashRocket.swf",
+		"library-path": [
+			"libs"
+		]
 	},
 	"mainClass": "Main"
 }
+

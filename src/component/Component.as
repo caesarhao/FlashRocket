@@ -161,6 +161,19 @@ package component{
             this.rotation = degree;
             return;
         }
+        public function set centerRotationWrong(degree : Number): void{
+            if (this.rotation == degree) {
+                return;
+            }
+            var matrix:Matrix = this.transform.matrix;
+            var rect:Rectangle = this.getBounds(this.parent);
+
+            matrix.translate(-(rect.left + (rect.width / 2)), -(rect.top + (rect.height / 2)));
+            matrix.rotate((degree / 180) * Math.PI);
+            matrix.translate(rect.left + (rect.width / 2), rect.top + (rect.height / 2));
+            this.transform.matrix = matrix;
+            this.rotation = Math.round(this.rotation);
+        }
         public function get pivotRotation():Number{
             return this.rotation;
         }
@@ -184,13 +197,12 @@ package component{
             }
             // come back to initial state first.
             this.rotation = 0;
-            var matrix:Matrix = this.transform.matrix;
-            var rect:Rectangle = this.getBounds(this.parent);
-
-            matrix.translate(-(rect.left + this.pivotX), -(rect.top + this.pivotY));
-            matrix.rotate(degree*Math.PI/180);
-            matrix.translate((rect.left + this.pivotX), (rect.top + this.pivotY));
-            this.transform.matrix = matrix;
+            this.x += (pivotX - centerX);
+            this.y += (pivotY - centerY);
+            this.rotation = degree;
+            var dist:Number = Point.distance(pivot, center);
+            this.x += dist*Math.cos((degree*Math.PI/180));
+            this.y += dist*Math.sin((degree*Math.PI/180));
         }
     }
 }

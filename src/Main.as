@@ -71,10 +71,10 @@ package
 		}
 		private function onKeyDownStage(e:KeyboardEvent):void{
 			if(e.keyCode == Keyboard.LEFT){
-				rs.rotation -= 10;
+				rs.centerRotation -= 10;
 			}
 			else if(e.keyCode == Keyboard.RIGHT){
-				rs.rotation += 10;
+				rs.centerRotation += 10;
 			}
 			else if(e.keyCode == Keyboard.UP){
 				rs.y --;
@@ -85,7 +85,7 @@ package
 			else{
 
 			}
-			tf.text = "Engine Coord: x "+rs.x + " y " + rs.y;
+			tf.text = "x "+rs.x + " y " + rs.y + " angle "+ rs.rotation;
 		}
 	}
 }

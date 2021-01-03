@@ -62,10 +62,12 @@ package component
             _diameterInMeter = diameterInMeter;
             _fillingRatio = fillingRatio;
             _shellWeightKg = 0;
+            _edge.left = 0;
+            _edge.top = 0;  
             _edge.width = diameterInPixel;
             _edge.height = heightInPixel;
-            this.pivot.x = 0;
-            this.pivot.y = 0;
+            this.pivot.x = this.left;
+            this.pivot.y = this.top;
             //setChildIndex(_pivotShape, this.numChildren-1);
             //setChildIndex(_centerShape, this.numChildren-1);
             
